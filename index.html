@@ -1,0 +1,65 @@
+<html>
+<!doctype html>
+<html lang="en-us">
+
+    <head>
+        <meta charset="UTF-8">
+
+        <title>HTML</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <br><br>
+        <div class="container">
+
+            <div class="card text-center">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-4">
+                          <h3>Your Health: <span id="player-health"></span></h3>
+                          <p>Your Attack: <span id="player-attack"></span></p>
+                        </div>
+                        <div class="col-4">
+                          
+                        </div>
+                        <div class="col-4">
+                          <h3>Opponent's Health: <span id="opponent-health"></span></h3>
+                        </div>
+                      </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <img id="hero-image" src="https://specials-images.forbesimg.com/imageserve/5eaaeccf9d04a700067fc87d/960x0.jpg?fit=scale" class="rounded img-fluid" alt="Hero">
+                        </div>
+                        <div class="col-4">
+                            <p id="battle-log"></p>
+                        </div>
+                        <div class="col-4">
+                            <img id="opponent-image" src="https://previews.123rf.com/images/tsuneo/tsuneo1906/tsuneo190600408/124399719-3d-cg-rendering-of-goblin.jpg" class="rounded img-fluid" alt="opponent">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3 id="game-message"></h3>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer text-muted">
+                    <div class="row">
+                        <div class="col-5">
+                            <button class="btn btn-primary" id="attack-button" onclick="attack()">lay down the hurt</button>
+                            <button class="btn btn-primary" id="health-button" onclick="health()">health potion</button>
+                            <button class="btn btn-primary" id="restart-button" hidden="true" onclick="restart()">restart game</button>
+                        </div>
+                      </div>
+                </div>
+              </div>
+    </body>
+
+<script src="index.js"></script>
+
+</html>
