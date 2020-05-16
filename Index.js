@@ -17,14 +17,13 @@ const oAttack = opponent.power + opponent.weapon
 
 const attack = () => {
     let attackButton = document.getElementById('attack-button');
-    let healthButton = document.getElementById('health-button');
-    let restartButton = document.getElementById('restart-button');
     let gameMessage = document.getElementById('game-message');
 
     // let playerAttack = determineAttack(player.power)
     let playerAttack = determineAttack(pAttack)
     opponent.health -= playerAttack;
     printToScreen();
+    document.getElementById('battle-log').innerText = "You have delt " + playerAttack + " damage!";
 
     if (isGameOver (opponent.health)){
         opponent.health = 0
@@ -33,7 +32,6 @@ const attack = () => {
         return;
     }
 
-    let healthPotion = 
 
     attackButton.disabled = true;
     gameMessage.innerText = "Its rumble time!"
@@ -43,6 +41,7 @@ const attack = () => {
         let opponentAttack = determineAttack(oAttack)
         player.health -= opponentAttack;
         printToScreen();
+        document.getElementById('battle-log').innerText = "Enemy has delt " + opponentAttack + " damage!";
 
         if (isGameOver (player.health)){
             player.health = 0
@@ -55,6 +54,19 @@ const attack = () => {
 
     console.log(playerAttack)
 }
+
+
+const health = () => {
+    player.health += 10;
+    printToScreen();
+}
+
+// let healthButton = document.getElementById('health-button');
+// healthButton.addEventListener("click", function() {
+//     player.health = player.health + 10
+// });
+
+
 
 const endGame = (message) => {
     document.getElementById('game-message').innerText = message;
@@ -71,6 +83,8 @@ const determineAttack = (attack) => {
 const isGameOver = (health) => {
     return health <= 0;
 }
+
+
 
 const restart = () => {
     let attackButton =  document.getElementById('attack-button');
