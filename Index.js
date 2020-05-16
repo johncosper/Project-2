@@ -19,6 +19,7 @@ const opponent = {
 };
 const oAttack = opponent.power + opponent.weapon;
 
+
 const attack = () => {
   const attackButton = document.getElementById('attack-button');
   const gameMessage = document.getElementById('game-message');
@@ -36,7 +37,6 @@ const attack = () => {
     endGame('Congrats, you won son!');
     return;
   }
-
 
   attackButton.disabled = true;
   gameMessage.innerText = 'Its rumble time!';
@@ -57,10 +57,9 @@ const attack = () => {
     }
     attackButton.disabled = false;
   }, 500);
-
+  
   console.log(playerAttack);
 };
-
 
 const health = () => {
   if (potions.count > 0) {
@@ -72,6 +71,7 @@ const health = () => {
     'No more health potions!';
   }
 };
+
 
 // let healthButton = document.getElementById('health-button');
 // healthButton.addEventListener("click", function() {
@@ -94,6 +94,8 @@ const determineAttack = (attack) => {
 const isGameOver = (health) => {
   return health <= 0;
 };
+
+
 
 
 const restart = () => {
