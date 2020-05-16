@@ -1,4 +1,7 @@
+/* eslint-disable require-jsdoc */
+/* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
+
 
 const player = {
   health: 100,
@@ -35,6 +38,14 @@ const attack = () => {
     opponent.health = 0;
     printToScreen();
     endGame('Congrats, you won son!');
+    enemyCoords.forEach((coord, i, enemyCoords) => {
+      if (coord.x - 1 <= hero.x && coord.x + 1 >= hero.x &&
+           coord.y - 1 <= hero.y && coord.y + 1 >= hero.y ) {
+        map[coord.y][coord.x] = 0;
+        enemyCoords.splice(i, 1);
+        map[hero.y][hero.x] = 2;
+      }
+    });
     return;
   }
 
@@ -53,11 +64,14 @@ const attack = () => {
       player.health = 0;
       printToScreen();
       endGame('You are complete trash, how could you lose?');
+      hero.isAlive = false;
+      // Make pile of blood pixelart for Lada
+      map[hero.x][hero.y] = 0;
       return;
     }
     attackButton.disabled = false;
   }, 500);
-  
+
   console.log(playerAttack);
 };
 
@@ -96,8 +110,6 @@ const isGameOver = (health) => {
 };
 
 
-
-
 const restart = () => {
   const attackButton = document.getElementById('attack-button');
   player.health = 100;
@@ -106,7 +118,11 @@ const restart = () => {
   attackButton.disabled = false;
   attackButton.hidden = false;
   document.getElementById('restart-button').hidden = true;
+  document.getElementById('battle-log').innerText ='';
   printToScreen();
+  //  pauseMap.resume();
+  isTimerPaused = false;
+  hideShow();
 };
 
 const printToScreen = () => {
@@ -124,3 +140,16 @@ const printToScreen = () => {
 };
 
 printToScreen();
+
+function hideShow() {
+  const map = document.getElementById('mapDiv');
+  const turn = document.getElementById('turnDiv');
+  if (map.style.display === 'none') {
+    map.style.display = 'block';
+    turn.style.display = 'none';
+    render();
+  } else {
+    map.style.display = 'none';
+    turn.style.display = 'block';
+  }
+};
