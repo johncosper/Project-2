@@ -6,6 +6,11 @@ let player = {
 }
 const pAttack = player.power + player.weapon
 
+let potions = {
+    count: 2,
+    recovery: 10
+}
+
 let opponent = {
     health: 100,
     power: 20,
@@ -57,8 +62,13 @@ const attack = () => {
 
 
 const health = () => {
-    player.health += 10;
-    printToScreen();
+    if (potions.count > 0) {
+        potions.count -= 1;
+        player.health += potions.recovery;
+        printToScreen();
+    } else {
+        document.getElementById('game-message').innerText = "No more health potions!";
+    }
 }
 
 // let healthButton = document.getElementById('health-button');
@@ -106,6 +116,9 @@ const printToScreen = () => {
 
     document.getElementById('player-attack').innerText = 
     pAttack;
+
+    document.getElementById('player-potions').innerText = 
+    potions.count;
 }
 
 printToScreen();
