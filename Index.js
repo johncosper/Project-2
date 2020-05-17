@@ -4,7 +4,7 @@
 
 
 const player = {
-  health: 100,
+  health: 10,
   power: 20,
   weapon: 10,
 };
@@ -37,7 +37,7 @@ const attack = () => {
   if (isGameOver(opponent.health)) {
     opponent.health = 0;
     printToScreen();
-    endGame('Congrats, you won son!');
+    endTurn('Congrats, you won son!');
     enemyCoords.forEach((coord, i, enemyCoords) => {
       if (coord.x - 1 <= hero.x && coord.x + 1 >= hero.x &&
            coord.y - 1 <= hero.y && coord.y + 1 >= hero.y ) {
@@ -63,7 +63,7 @@ const attack = () => {
     if (isGameOver(player.health)) {
       player.health = 0;
       printToScreen();
-      endGame('You are complete trash, how could you lose?');
+      endTurn('You are complete trash, how could you lose?');
       hero.isAlive = false;
       // Make pile of blood pixelart for Lada
       map[hero.x][hero.y] = 0;
@@ -76,7 +76,12 @@ const attack = () => {
 };
 
 const health = () => {
-  if (potions.count > 0) {
+  if (player.health <= 0 || opponent.health <= 0) {
+    const potionButton = document.getElementById('health-button');
+    potionButton.disabled = true;
+    document.getElementById('game-message').innerText =
+    'Potions are of no use now!';
+  } else if (potions.count > 0) {
     potions.count -= 1;
     player.health += potions.recovery;
     printToScreen();
@@ -87,13 +92,7 @@ const health = () => {
 };
 
 
-// let healthButton = document.getElementById('health-button');
-// healthButton.addEventListener("click", function() {
-//     player.health = player.health + 10
-// });
-
-
-const endGame = (message) => {
+const endTurn = (message) => {
   document.getElementById('game-message').innerText = message;
   document.getElementById('attack-button').hidden = true;
   document.getElementById('restart-button').hidden = false;
@@ -119,8 +118,7 @@ const restart = () => {
   attackButton.hidden = false;
   document.getElementById('restart-button').hidden = true;
   document.getElementById('battle-log').innerText ='';
-  printToScreen();
-  //  pauseMap.resume();
+  printToScreen(); 
   isTimerPaused = false;
   hideShow();
 };
@@ -144,10 +142,14 @@ printToScreen();
 function hideShow() {
   const map = document.getElementById('mapDiv');
   const turn = document.getElementById('turnDiv');
+  const gameOver = document.getElementById('game-over');
   if (map.style.display === 'none') {
     map.style.display = 'block';
     turn.style.display = 'none';
     render();
+    if (player.health <= 0) {
+      gameOver.style.display = 'block';
+    }
   } else {
     map.style.display = 'none';
     turn.style.display = 'block';
