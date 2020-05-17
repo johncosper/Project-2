@@ -16,7 +16,7 @@ const potions = {
 };
 
 const opponent = {
-  health: 100,
+  health: 10,
   power: 20,
   weapon: 10,
 };
@@ -41,11 +41,35 @@ const attack = () => {
     enemyCoords.forEach((coord, i, enemyCoords) => {
       if (coord.x - 1 <= hero.x && coord.x + 1 >= hero.x &&
            coord.y - 1 <= hero.y && coord.y + 1 >= hero.y ) {
-        map[coord.y][coord.x] = 0;
+        map[level][coord.y][coord.x] = 0;
         enemyCoords.splice(i, 1);
-        map[hero.y][hero.x] = 2;
+        map[level][hero.y][hero.x] = 2;
       }
     });
+    if (enemyCoords.length === 0) {
+      level++;
+      console.log(level);
+      enemyCoords = [
+        {
+          y: 13,
+          x: 12,
+        },
+        {
+          y: 7,
+          x: 7,
+        },
+        {
+          y: 8,
+          x: 9,
+        },
+      ];
+      hero = {
+        x: 1,
+        y: 1,
+        isAlive: true,
+      };
+      render();
+    }
     return;
   }
 
@@ -66,7 +90,7 @@ const attack = () => {
       endTurn('You are complete trash, how could you lose?');
       hero.isAlive = false;
       // Make pile of blood pixelart for Lada
-      map[hero.x][hero.y] = 0;
+      map[level][hero.x][hero.y] = 0;
       return;
     }
     attackButton.disabled = false;
@@ -114,7 +138,7 @@ const restart = () => {
   hideShow();
   const attackButton = document.getElementById('attack-button');
   player.health = 100;
-  opponent.health = 100;
+  opponent.health = 10;
   document.getElementById('game-message').innerText = '';
   attackButton.disabled = false;
   attackButton.hidden = false;
