@@ -1,6 +1,5 @@
 /* eslint-disable require-jsdoc */
 const container = document.getElementById('mapDiv');
-// let pauseMap = false;
 
 const map = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -26,6 +25,20 @@ const hero = {
   isAlive: true,
 };
 
+// const potion = [
+//   {
+//     y: 13,
+//     x: 3,
+//   },
+// ];
+
+// const weapon = [
+//   {
+//     y: 13,
+//     x: 5,
+//   },
+// ];
+
 const enemyCoords = [
   {
     y: 13,
@@ -39,26 +52,6 @@ const enemyCoords = [
 ];
 
 let isTimerPaused = false;
-
-/* const Timer = function(callback, delay) {
-  let timerId; let start; let remaining = delay;
-  this.pause = function() {
-    window.clearTimeout(timerId);
-    remaining -= Date.now() - start;
-  };
-
-  this.resume = function() {
-    start = Date.now();
-    window.clearTimeout(timerId);
-    timerId = window.setTimeout(callback, remaining);
-  };
-
-  this.resume();
-};
-
-const pauseMap = new Timer(() => {
-  moveEnemy();
-}, 500);*/
 
 function render() {
   container.innerHTML = '';
@@ -150,7 +143,6 @@ setInterval(() => {
 function checkBattle() {
   let isBattle = false;
   isTimerPaused = true;
-  //  pauseMap.pause();
   enemyCoords.forEach((coord, i) => {
     if (coord.x - 1 <= hero.x && coord.x + 1 >= hero.x &&
          coord.y - 1 <= hero.y && coord.y + 1 >= hero.y ) {
@@ -161,7 +153,6 @@ function checkBattle() {
   if (isBattle) {
     hideShow();
   } else {
-    //    pauseMap.resume();
     isTimerPaused = false;
   }
 }
