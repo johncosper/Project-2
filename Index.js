@@ -4,7 +4,7 @@
 
 
 const player = {
-  health: 10,
+  health: 100,
   power: 20,
   weapon: 10,
 };
@@ -110,6 +110,8 @@ const isGameOver = (health) => {
 
 
 const restart = () => {
+  isTimerPaused = false;
+  hideShow();
   const attackButton = document.getElementById('attack-button');
   player.health = 100;
   opponent.health = 100;
@@ -118,9 +120,7 @@ const restart = () => {
   attackButton.hidden = false;
   document.getElementById('restart-button').hidden = true;
   document.getElementById('battle-log').innerText ='';
-  printToScreen(); 
-  isTimerPaused = false;
-  hideShow();
+  printToScreen();
 };
 
 const printToScreen = () => {
