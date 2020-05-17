@@ -65,8 +65,23 @@
         <br><br>
         <div class="container">
             <div class="row">
-            <div class="" id ="game-over" style="display: none;"><h1>GAME OVER</h1>
-            <button class="btn btn-warning">Play Again</button></div>
+                <div class="modal" tabindex="-1" role="dialog" id ="game-over" >
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">GAME OVER</h5>
+                          </button>
+                        </div>
+                        <div class="modal-body text-center">
+                          <p>Would you like to retry?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-warning .mx-auto" id="newGameBtn" onclick="window.location.reload()">Play Again</button></div>
+                        </div>
+                      </div>
+                    </div>
+                </div>         
+
             <div id="mapDiv" style="height:750px; width: 750px;"></div>
             </div>
         </div>
