@@ -20,17 +20,23 @@ module.exports = function(app) {
   // otherwise send back an error
   app.post('/api/signup', function(req, res) {
     db.User.create({
-      email: req.body.email,
-      password: req.body.password,
+      email: req.body.user.email,
+      password: req.body.user.password,
     })
-        .then(function() {
-          res.redirect(307, '/api/login');
-        })
-        .catch(function(err) {
-          res.status(401).json(err);
+        .then(function(response) {
+          db.Hero.create({
+            name: req.body.hero.name,
+            UserId: response.id,
+          })
+              .then(function(result) {
+                console.log(result);
+                res.status(201);
+              })
+              .catch(function(err) {
+                res.status(500).json(err);
+              });
         });
   });
-
   // Route for logging user out
   app.get('/logout', function(req, res) {
     req.logout();
