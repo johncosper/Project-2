@@ -82,28 +82,26 @@ render();
 
 document.addEventListener('keydown', (event) => {
   map[hero.y][hero.x] = 0;
-  if (!isTimerPaused) {
-    if (hero.isAlive) {
-      if (event.keyCode === 37 || event.keyCode === 65) { // left
-        if (map[hero.y][hero.x - 1] === 3) {
-        } else if (map[hero.y][hero.x - 1] !== 1) {
-          hero.x--;
-        }
-      } else if (event.keyCode === 38 || event.keyCode === 87) { // up
-        if (map[hero.y - 1][hero.x] === 3) {
-        } else if (map[hero.y - 1][hero.x] !== 1) {
-          hero.y--;
-        }
-      } else if (event.keyCode === 39 || event.keyCode === 68) { // right
-        if (map[hero.y][hero.x + 1] === 3) {
-        } else if (map[hero.y][hero.x + 1] !== 1) {
-          hero.x++;
-        }
-      } else if (event.keyCode === 40 || event.keyCode === 83) { // down
-        if (map[hero.y + 1][hero.x] === 3) {
-        } else if (map[hero.y + 1][hero.x] !== 1) {
-          hero.y++;
-        }
+  if (!isTimerPaused && hero.isAlive) {
+    if (event.keyCode === 37 || event.keyCode === 65) { // left
+      if (map[hero.y][hero.x - 1] === 3) {
+      } else if (map[hero.y][hero.x - 1] !== 1) {
+        hero.x--;
+      }
+    } else if (event.keyCode === 38 || event.keyCode === 87) { // up
+      if (map[hero.y - 1][hero.x] === 3) {
+      } else if (map[hero.y - 1][hero.x] !== 1) {
+        hero.y--;
+      }
+    } else if (event.keyCode === 39 || event.keyCode === 68) { // right
+      if (map[hero.y][hero.x + 1] === 3) {
+      } else if (map[hero.y][hero.x + 1] !== 1) {
+        hero.x++;
+      }
+    } else if (event.keyCode === 40 || event.keyCode === 83) { // down
+      if (map[hero.y + 1][hero.x] === 3) {
+      } else if (map[hero.y + 1][hero.x] !== 1) {
+        hero.y++;
       }
     }
 
@@ -150,7 +148,7 @@ function checkBattle() {
     }
   });
 
-  if (isBattle) {
+  if (isBattle && hero.isAlive) {
     hideShow();
   } else {
     isTimerPaused = false;

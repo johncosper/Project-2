@@ -4,7 +4,7 @@
 
 
 const player = {
-  health: 100,
+  health: 10,
   power: 20,
   weapon: 10,
 };
@@ -118,9 +118,8 @@ const restart = () => {
   attackButton.hidden = false;
   document.getElementById('restart-button').hidden = true;
   document.getElementById('battle-log').innerText ='';
-  printToScreen();
+  printToScreen(); 
   isTimerPaused = false;
-  // Create GAME OVER div on Map
   hideShow();
 };
 
@@ -145,12 +144,12 @@ function hideShow() {
   const turn = document.getElementById('turnDiv');
   const gameOver = document.getElementById('game-over');
   if (map.style.display === 'none') {
-    if (player.health <= 0) {
-      gameOver.style.display = 'block';
-    }
     map.style.display = 'block';
     turn.style.display = 'none';
     render();
+    if (player.health <= 0) {
+      gameOver.style.display = 'block';
+    }
   } else {
     map.style.display = 'none';
     turn.style.display = 'block';
