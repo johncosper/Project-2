@@ -1,7 +1,8 @@
+/* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 const container = document.getElementById('mapDiv');
 
-let level = 0;
+const level = 0;
 
 document.getElementById('level').innerText = level+1;
 
@@ -41,7 +42,7 @@ const map = [[
 ],
 ];
 
-let hero = {
+const hero = {
   x: 1,
   y: 1,
   isAlive: true,
@@ -61,7 +62,7 @@ let hero = {
 //   },
 // ];
 
-let enemyCoords = [
+const enemyCoords = [
   {
     y: 13,
     x: 12,
@@ -98,9 +99,6 @@ function render() {
     }
   }
 }
-
-render();
-
 
 document.addEventListener('keydown', (event) => {
   map[level][hero.y][hero.x] = 0;
