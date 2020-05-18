@@ -30,6 +30,10 @@ module.exports = function(app) {
             name: req.body.hero.name,
             UserId: response.id,
           })
+              .then(function() {
+                db.Skeleton.create();
+                db.SkeletonLord.create();
+              })
               .then(function(result) {
                 // console.log(result);
                 res.status(201);
@@ -64,6 +68,22 @@ module.exports = function(app) {
   app.get('/api/hero_data', function(req, res) {
     db.Hero.findOne({Where: UserId = currentPlayer[0].id})
         .then(function(data) {
+          res.json(data);
+        });
+  });
+
+  app.get('/api/skeleton_data', function(req, res) {
+    db.Skeleton.findOne({Where: id = 1})
+        .then(function(data) {
+          console.log(data);
+          res.json(data);
+        });
+  });
+
+  app.get('/api/skeletonLord_data', function(req, res) {
+    db.SkeletonLord.findAll({})
+        .then(function(data) {
+          console.log(data);
           res.json(data);
         });
   });

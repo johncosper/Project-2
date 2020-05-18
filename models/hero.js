@@ -7,11 +7,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     health_points: {
       type: DataTypes.INTEGER,
-      defaultValue: '100',
+      defaultValue: 100,
     },
     attack_points: {
       type: DataTypes.INTEGER,
-      defaultValue: '20',
+      defaultValue: 20,
     },
     weapon_power: {
       type: DataTypes.INTEGER,

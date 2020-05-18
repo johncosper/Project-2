@@ -2,8 +2,7 @@
 /* eslint-disable require-jsdoc */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
-
-// Turn-Based Functionality
+const skeleton = [];
 const currentHero = [];
 let player = {};
 let opponent = null;
@@ -12,9 +11,9 @@ let pAttack = null;
 let oAttack = null;
 
 $(document).ready(function() {
-  const data = $.get('/api/hero_data').then((data) => {
-    console.log(data);
-    currentHero.push(data);
+  const hData = $.get('/api/hero_data').then((hData) => {
+    console.log(hData);
+    currentHero.push(hData);
     console.log(currentHero);
     player = {
       health: currentHero[0].health_points,
@@ -34,12 +33,17 @@ $(document).ready(function() {
     }, 500);
   });
 
-  opponent = {
-    health: 10,
-    power: 20,
-    weapon: 10,
-  };
-  oAttack = opponent.power + opponent.weapon;
+  const sData = $.get('/api/skeleton_data').then((sData) => {
+    console.log(sData);
+    skeleton.push(sData);
+    console.log(skeleton);
+    opponent = {
+      health: skeleton[0].health_points,
+      power: skeleton[0].attack_points,
+      weapon: skeleton[0].weapon_power,
+    };
+    oAttack = opponent.power + opponent.weapon;
+  });
 });
 
 function attack() {
@@ -66,6 +70,7 @@ function attack() {
       }
     });
     if (enemyCoords.length === 0) {
+      player.health = currentHero[0].health_points;
       level++;
       console.log(level);
       enemyCoords = [
@@ -156,8 +161,7 @@ const restart = () => {
   isTimerPaused = false;
   hideShow();
   const attackButton = document.getElementById('attack-button');
-  player.health = 100;
-  opponent.health = 10;
+  opponent.health = skeleton[0].health_points;
   document.getElementById('game-message').innerText = '';
   attackButton.disabled = false;
   attackButton.hidden = false;
@@ -292,7 +296,6 @@ const map = [[
 ],
 ];
 
-
 const hero = {
   x: 1,
   y: 1,
@@ -350,6 +353,7 @@ function render() {
     }
   }
 }
+
 document.addEventListener('keydown', (event) => {
   map[level][hero.y][hero.x] = 0;
   if (!isTimerPaused && hero.isAlive) {
@@ -400,7 +404,6 @@ function moveEnemy() {
   checkBattle();
 }
 
-
 function checkBattle() {
   let isBattle = false;
   isTimerPaused = true;
@@ -417,6 +420,7 @@ function checkBattle() {
     isTimerPaused = false;
   }
 };
+
 // -------------------------------------------------------------------
 // -------------------------------------------------------------------
 // Canvas Chart
