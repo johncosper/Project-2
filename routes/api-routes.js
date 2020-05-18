@@ -57,19 +57,14 @@ module.exports = function(app) {
         email: req.user.email,
         id: req.user.id,
       });
-      console.log(res.req.user);
+      currentPlayer.push(res.req.user.id);
     }
   });
 
   app.get('/api/hero_data', function(req, res) {
-    console.log(req);
-    console.log(res);
-    res.json({
-      name: req.hero.name,
-      health_points: req.hero.health_points,
-      attack_points: req.hero.attack_points,
-      weapon_power: req.hero.weapon_power,
-      potion_count: req.hero.potion_count,
-    });
+    db.Hero.findOne({Where: UserId = currentPlayer[0].id})
+        .then(function(data) {
+          res.json(data);
+        });
   });
 };
