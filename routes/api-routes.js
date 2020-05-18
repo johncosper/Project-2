@@ -62,6 +62,8 @@ module.exports = function(app) {
   });
 
   app.get('/api/hero_data', function(req, res) {
+    console.log(req);
+    console.log(res);
     res.json({
       name: req.hero.name,
       health_points: req.hero.health_points,
