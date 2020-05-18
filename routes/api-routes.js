@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 // Requiring our models and passport as we've configured it
 const db = require('../models');
 const passport = require('../config/passport');
 
 module.exports = function(app) {
+  const currentPlayer = [];
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
@@ -47,7 +49,7 @@ module.exports = function(app) {
   app.get('/api/user_data', function(req, res) {
     if (!req.user) {
       // The user is not logged in, send back an empty object
-      res.json({});
+      res.status(401);
     } else {
       // Otherwise send back the user's email and id
       // Sending back a password, even a hashed password, isn't a good idea
@@ -55,6 +57,17 @@ module.exports = function(app) {
         email: req.user.email,
         id: req.user.id,
       });
+      console.log(res.req.user);
     }
+  });
+
+  app.get('/api/hero_data', function(req, res) {
+    res.json({
+      name: req.hero.name,
+      health_points: req.hero.health_points,
+      attack_points: req.hero.attack_points,
+      weapon_power: req.hero.weapon_power,
+      potion_count: req.hero.potion_count,
+    });
   });
 };
