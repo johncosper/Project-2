@@ -29,7 +29,7 @@ module.exports = function(app) {
             UserId: response.id,
           })
               .then(function(result) {
-                console.log(result);
+                // console.log(result);
                 res.status(201);
               })
               .catch(function(err) {
