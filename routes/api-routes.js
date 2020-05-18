@@ -81,7 +81,7 @@ module.exports = function(app) {
   });
 
   app.get('/api/skeletonLord_data', function(req, res) {
-    db.SkeletonLord.findAll({})
+    db.SkeletonLord.findAll({Where: id = 1})
         .then(function(data) {
           console.log(data);
           res.json(data);
