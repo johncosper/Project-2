@@ -2,12 +2,15 @@
 /* eslint-disable require-jsdoc */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
+
+// Turn-Based Functionality
 const currentHero = [];
 let player = {};
 let opponent = null;
 let potions = {};
 let pAttack = null;
 let oAttack = null;
+
 $(document).ready(function() {
   const data = $.get('/api/hero_data').then((data) => {
     console.log(data);
@@ -189,6 +192,7 @@ function hideShow() {
     if (player.health <= 0) {
       gameOver.style.display = 'block';
     }
+
   } else {
     map.style.display = 'none';
     turn.style.display = 'block';
@@ -202,41 +206,93 @@ let level = 0;
 
 document.getElementById('level').innerText = level+1;
 
-const map = [[
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 2, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-],
-[
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 2, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1],
-  [1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1],
-  [1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1],
-  [1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-],
-];
+  const map = [[
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 2, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  ],
+  [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 2, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1],
+    [1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
+    [1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  ],
+  [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 2, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1],
+    [1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1],
+    [1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1],
+    [1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  ],
+  [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+    [1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  ],
+  [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1],
+    [1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    [1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  ],
+  ];
+  
 
 const hero = {
   x: 1,
@@ -294,57 +350,57 @@ function render() {
       container.append(field);
     }
   }
-}
 
-document.addEventListener('keydown', (event) => {
-  map[level][hero.y][hero.x] = 0;
-  if (!isTimerPaused && hero.isAlive) {
-    if (event.keyCode === 37 || event.keyCode === 65) { // left
-      if (map[level][hero.y][hero.x - 1] === 3) {
-      } else if (map[level][hero.y][hero.x - 1] !== 1) {
-        hero.x--;
+  document.addEventListener('keydown', (event) => {
+    map[level][hero.y][hero.x] = 0;
+    if (!isTimerPaused && hero.isAlive) {
+      if (event.keyCode === 37 || event.keyCode === 65) { // left
+        if (map[level][hero.y][hero.x - 1] === 3) {
+        } else if (map[level][hero.y][hero.x - 1] !== 1) {
+          hero.x--;
+        }
+      } else if (event.keyCode === 38 || event.keyCode === 87) { // up
+        if (map[level][hero.y - 1][hero.x] === 3) {
+        } else if (map[level][hero.y - 1][hero.x] !== 1) {
+          hero.y--;
+        }
+      } else if (event.keyCode === 39 || event.keyCode === 68) { // right
+        if (map[level][hero.y][hero.x + 1] === 3) {
+        } else if (map[level][hero.y][hero.x + 1] !== 1) {
+          hero.x++;
+        }
+      } else if (event.keyCode === 40 || event.keyCode === 83) { // down
+        if (map[level][hero.y + 1][hero.x] === 3) {
+        } else if (map[level][hero.y + 1][hero.x] !== 1) {
+          hero.y++;
+        }
       }
-    } else if (event.keyCode === 38 || event.keyCode === 87) { // up
-      if (map[level][hero.y - 1][hero.x] === 3) {
-      } else if (map[level][hero.y - 1][hero.x] !== 1) {
-        hero.y--;
-      }
-    } else if (event.keyCode === 39 || event.keyCode === 68) { // right
-      if (map[level][hero.y][hero.x + 1] === 3) {
-      } else if (map[level][hero.y][hero.x + 1] !== 1) {
-        hero.x++;
-      }
-    } else if (event.keyCode === 40 || event.keyCode === 83) { // down
-      if (map[level][hero.y + 1][hero.x] === 3) {
-      } else if (map[level][hero.y + 1][hero.x] !== 1) {
-        hero.y++;
-      }
+
+      map[level][hero.y][hero.x] = 2;
+
+      render();
+      checkBattle();
     }
-
-    map[level][hero.y][hero.x] = 2;
-
+  });
+  function moveEnemy() {
+    enemyCoords.forEach((coord, i) => {
+      map[level][coord.y][coord.x] = 0;
+      const randomMove = Math.floor(Math.random() * 4);
+      if (randomMove === 0 && map[level][coord.y][coord.x - 1] !== 1) { // left
+        enemyCoords[i].x--;
+      } else if (randomMove === 1 && map[level][coord.y - 1][coord.x] !== 1) { // up
+        enemyCoords[i].y--;
+      } else if (randomMove === 2 && map[level][coord.y][coord.x + 1] !== 1) { // right
+        enemyCoords[i].x++;
+      } else if (randomMove === 3 && map[level][coord.y + 1][coord.x] !== 1) { // down
+        enemyCoords[i].y++;
+      }
+      map[level][coord.y][coord.x] = 3;
+    });
     render();
     checkBattle();
   }
-});
-function moveEnemy() {
-  enemyCoords.forEach((coord, i) => {
-    map[level][coord.y][coord.x] = 0;
-    const randomMove = Math.floor(Math.random() * 4);
-    if (randomMove === 0 && map[level][coord.y][coord.x - 1] !== 1) { // left
-      enemyCoords[i].x--;
-    } else if (randomMove === 1 && map[level][coord.y - 1][coord.x] !== 1) { // up
-      enemyCoords[i].y--;
-    } else if (randomMove === 2 && map[level][coord.y][coord.x + 1] !== 1) { // right
-      enemyCoords[i].x++;
-    } else if (randomMove === 3 && map[level][coord.y + 1][coord.x] !== 1) { // down
-      enemyCoords[i].y++;
-    }
-    map[level][coord.y][coord.x] = 3;
-  });
-  render();
-  checkBattle();
-}
+
 
 function checkBattle() {
   let isBattle = false;
@@ -352,14 +408,35 @@ function checkBattle() {
   enemyCoords.forEach((coord, i) => {
     if (coord.x - 1 <= hero.x && coord.x + 1 >= hero.x &&
          coord.y - 1 <= hero.y && coord.y + 1 >= hero.y ) {
-      isBattle = true;
+        isBattle = true;
+      }
+    });
+
+    if (isBattle && hero.isAlive) {
+      hideShow();
+    } else {
+      isTimerPaused = false;
     }
+  };
+  // -------------------------------------------------------------------
+  // -------------------------------------------------------------------
+  // Canvas Chart
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const chart = new Chart(ctx, {
+  // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+      labels: ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'],
+      datasets: [{
+        label: 'Damage Dealt',
+        // backgroundColor: 'rgb(100, 99, 132)',
+        borderColor: 'rgb(90, 90, 250)',
+        data: [0, 1, 2, 3, 4],
+      }],
+    },
+
+    // Configuration options go here
+    options: {},
   });
-
-  if (isBattle && hero.isAlive) {
-    hideShow();
-  } else {
-    isTimerPaused = false;
-  }
-};
-
