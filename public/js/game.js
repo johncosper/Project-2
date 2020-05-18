@@ -9,6 +9,8 @@ let opponent = null;
 let potions = {};
 let pAttack = null;
 let oAttack = null;
+const potionButton = document.getElementById('health-button');
+const dmgArray = [];
 
 $(document).ready(function() {
   const hData = $.get('/api/hero_data').then((hData) => {
@@ -56,6 +58,9 @@ function attack() {
   printToScreen();
   document.getElementById('battle-log').innerText =
   'You have delt ' + playerAttack + ' damage!';
+  // add to a player attacks array
+  dmgArray.push(playerAttack);
+  console.log(dmgArray);
 
   if (isGameOver(opponent.health)) {
     opponent.health = 0;
@@ -73,6 +78,7 @@ function attack() {
       player.health = currentHero[0].health_points;
       level++;
       console.log(level);
+      document.getElementById('level').innerText = level+1;
       enemyCoords = [
         {
           y: 13,
@@ -87,11 +93,9 @@ function attack() {
           x: 9,
         },
       ];
-      hero = {
-        x: 1,
-        y: 1,
-        isAlive: true,
-      };
+      hero.x= 1,
+      hero.y= 1,
+      hero.isAlive= true,
       render();
     }
     return;
@@ -125,7 +129,6 @@ function attack() {
 
 const health = () => {
   if (player.health <= 0 || opponent.health <= 0) {
-    const potionButton = document.getElementById('health-button');
     potionButton.disabled = true;
     document.getElementById('game-message').innerText =
     'Potions are of no use now!';
@@ -165,6 +168,7 @@ const restart = () => {
   document.getElementById('game-message').innerText = '';
   attackButton.disabled = false;
   attackButton.hidden = false;
+  potionButton.disabled = false;
   document.getElementById('restart-button').hidden = true;
   document.getElementById('battle-log').innerText ='';
   printToScreen();
@@ -195,6 +199,7 @@ function hideShow() {
     render();
     if (player.health <= 0) {
       gameOver.style.display = 'block';
+      // canvasChart();
     }
   } else {
     map.style.display = 'none';
@@ -423,23 +428,23 @@ function checkBattle() {
 
 // -------------------------------------------------------------------
 // -------------------------------------------------------------------
-// Canvas Chart
-const ctx = document.getElementById('myChart').getContext('2d');
-const chart = new Chart(ctx, {
-  // The type of chart we want to create
-  type: 'line',
+// let chart = null;
+// // Canvas Chart
+// function canvasChart() {
+//   const ctx = document.getElementById('myChart').getContext('2d');
+//   chart = new Chart(ctx, {
+//     // The type of chart we want to create
+//     type: 'line',
 
-  // The data for our dataset
-  data: {
-    labels: ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'],
-    datasets: [{
-      label: 'Damage Dealt',
-      // backgroundColor: 'rgb(100, 99, 132)',
-      borderColor: 'rgb(90, 90, 250)',
-      data: [0, 1, 2, 3, 4],
-    }],
-  },
+//     // The data for our dataset
+//     data: {
+//       labels: ['Attack 1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'],
+//       datasets: [{
+//         label: 'Damage Dealt',
+//         borderColor: 'rgb(90, 90, 250)',
+//         data: dmgArray,
+//       }],
+//     },
+//   });
+// }
 
-  // Configuration options go here
-  options: {},
-});
