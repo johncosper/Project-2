@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "root1234",
+    "password": null,
     "database": "name_vs_skeletondb",
     "host": "127.0.0.1",
     "dialect": "mysql"
@@ -16,7 +16,7 @@
   "production": {
     "use_env_variable": "JAWSDB_URL",
     "username": "root",
-    "password": "root1234",
+    "password": null,
     "database": "name_vs_skeletondb",
     "host": "127.0.0.1",
     "dialect": "mysql"
